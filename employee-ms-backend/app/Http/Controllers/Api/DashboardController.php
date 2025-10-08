@@ -13,7 +13,7 @@ class DashboardController extends Controller
     protected $dashboardService;
 
     /**
-     * Suntik (inject) DashboardService secara automatik.
+     * inject the DashboardService automatically
      */
     public function __construct(DashboardService $dashboardService)
     {
@@ -25,10 +25,10 @@ class DashboardController extends Controller
      */
     public function stats()
     {
-        // Panggil service untuk dapatkan semua statistik
+        // call the service to get stats
         $stats = $this->dashboardService->getDashboardStats();
 
-        // Pulangkan response. Sangat bersih!
+        // return the stats as JSON
         return response()->json($stats);
     }
 }
