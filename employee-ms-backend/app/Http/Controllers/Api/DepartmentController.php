@@ -15,37 +15,37 @@ class DepartmentController extends Controller
     {
         $departments = Department::with('employees')->get();
 
-        // Balut collection dengan Resource
+        // Wrap collection with Resource
         return DepartmentResource::collection($departments);
     }
 
-    public function store(StoreDepartmentRequest $request) // <-- Guna StoreDepartmentRequest
+    public function store(StoreDepartmentRequest $request) // <-- Use StoreDepartmentRequest
     {
-        // Validasi berjalan secara automatik
+        // Validation runs automatically
         $department = Department::create($request->validated());
 
-        // Balut response dengan Resource
+        // Wrap response with Resource
         return new DepartmentResource($department);
     }
 
     public function show(Department $department)
     {
-        // Balut response dengan Resource
+        // Wrap response with Resource and load employees relationship
         return new DepartmentResource($department->load('employees'));
     }
 
-    public function update(UpdateDepartmentRequest $request, Department $department) // <-- Guna UpdateDepartmentRequest
+    public function update(UpdateDepartmentRequest $request, Department $department) // <-- Use UpdateDepartmentRequest
     {
-        // Validasi berjalan secara automatik
+        // Validation runs automatically
         $department->update($request->validated());
 
-        // Balut response dengan Resource
+        // Wrap response with Resource
         return new DepartmentResource($department);
     }
 
     public function destroy(Department $department)
     {
-        // Method ini sudah sempurna, tiada perubahan diperlukan
+        
         $department->delete();
 
         return response()->json(null, 204);
