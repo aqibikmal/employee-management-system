@@ -16,20 +16,20 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        // Validasi kini berlaku secara automatik sebelum kod ini berjalan.
-        // Jika gagal, ia akan pulangkan ralat 422 secara automatik.
+         // Validation now happens automatically before this code runs.
+         // If it fails, it will automatically return a 422 error.
 
-        // Cuba untuk log masuk pengguna
+        // Try to login the user
         if (! Auth::attempt($request->only('email', 'password'))) {
             throw ValidationException::withMessages([
                 'email' => ['The credentials provided are incorrect.'],
             ]);
         }
 
-        // Dapatkan user yang telah disahkan
+        // Get the authenticated user
         $user = User::where('email', $request->email)->firstOrFail();
 
-        // Cipta token dan pulangkan response
+        // Create token and return response
         $token = $user->createToken('api-token')->plainTextToken;
 
         return response()->json([
@@ -52,9 +52,9 @@ class AuthController extends Controller
     /**
      * Get the authenticated User.
      */
-    public function user(Request $request) // <-- TAMBAH METHOD INI
+    public function user(Request $request) 
     {
-        // Pulangkan maklumat pengguna yang sedang log masuk
+        // Return the authenticated user
         return response()->json($request->user());
     }
 }
